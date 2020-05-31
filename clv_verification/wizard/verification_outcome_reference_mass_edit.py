@@ -49,7 +49,7 @@ class VerificationOutcomeReferenceMassEdit(models.TransientModel):
          ], string='Verification Markers:', default=False, readonly=False, required=False
     )
 
-    @api.multi
+    # @api.multi
     def _reopen_form(self):
         self.ensure_one()
         action = {
@@ -71,7 +71,7 @@ class VerificationOutcomeReferenceMassEdit(models.TransientModel):
 
         return defaults
 
-    @api.multi
+    # @api.multi
     def do_verification_outcome_reference_mass_edit(self):
         self.ensure_one()
 

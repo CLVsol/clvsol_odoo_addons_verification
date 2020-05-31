@@ -30,13 +30,13 @@ class VerificationScheduleExec(models.TransientModel):
         store=False
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('schedule_ids')
     def _compute_count_schedules(self):
         for r in self:
             r.count_schedules = len(r.schedule_ids)
 
-    @api.multi
+    # @api.multi
     def _reopen_form(self):
         self.ensure_one()
         action = {
@@ -49,7 +49,7 @@ class VerificationScheduleExec(models.TransientModel):
         }
         return action
 
-    @api.multi
+    # @api.multi
     def do_verification_schedule_exec(self):
         self.ensure_one()
 

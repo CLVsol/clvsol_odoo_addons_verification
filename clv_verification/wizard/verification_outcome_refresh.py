@@ -30,13 +30,13 @@ class VerificationOutcomeRefresh(models.TransientModel):
         store=False
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('outcome_ids')
     def _compute_count_outcomes(self):
         for r in self:
             r.count_outcomes = len(r.outcome_ids)
 
-    @api.multi
+    # @api.multi
     def _reopen_form(self):
         self.ensure_one()
         action = {
@@ -49,7 +49,7 @@ class VerificationOutcomeRefresh(models.TransientModel):
         }
         return action
 
-    @api.multi
+    # @api.multi
     def do_verification_outcome_refresh(self):
         self.ensure_one()
 
