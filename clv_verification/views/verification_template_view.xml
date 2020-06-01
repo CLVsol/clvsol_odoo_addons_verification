@@ -133,7 +133,7 @@
         <field name="name">Verification Templates</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">clv.verification.template</field>
-        <field name="view_type">form</field>
+        <!--*field name="view_type">form</field-->
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="clv_verification_template_view_search"/>
         <field name="domain">[]</field>
