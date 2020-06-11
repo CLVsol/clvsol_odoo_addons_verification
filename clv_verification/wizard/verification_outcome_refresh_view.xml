@@ -39,10 +39,9 @@
     <act_window 
         id="clv_verification_outcome_refresh_action"
         name="Verification Outcome Refresh"
-        src_model="clv.verification.outcome"
+        binding_model="clv.verification.outcome"
         res_model="clv.verification.outcome.refresh"
         view_mode="form"
-        key2="client_action_multi"
         target="new"
     />
 

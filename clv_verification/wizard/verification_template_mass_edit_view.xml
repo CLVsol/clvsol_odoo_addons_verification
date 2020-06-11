@@ -69,10 +69,9 @@
     <act_window 
         id="clv_verification_template_mass_edit_action"
         name="Verification Template Mass Edit"
-        src_model="clv.verification.template"
+        binding_model="clv.verification.template"
         res_model="clv.verification.template.mass_edit"
         view_mode="form"
-        key2="client_action_multi"
         target="new"
     />
 

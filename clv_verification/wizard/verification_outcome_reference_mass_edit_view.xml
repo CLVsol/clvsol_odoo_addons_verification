@@ -39,10 +39,9 @@
     <act_window 
         id="clv_verification_outcome_reference_mass_edit_action"
         name="Verification Outcome Reference Mass Edit"
-        src_model="clv.verification.outcome"
+        binding_model="clv.verification.outcome"
         res_model="clv.verification.outcome.reference_mass_edit"
         view_mode="form"
-        key2="client_action_multi"
         target="new"
     />
 

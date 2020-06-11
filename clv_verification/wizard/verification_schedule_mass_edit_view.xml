@@ -75,10 +75,9 @@
     <act_window 
         id="clv_verification_schedule_mass_edit_action"
         name="Verification Schedule Mass Edit"
-        src_model="clv.verification.schedule"
+        binding_model="clv.verification.schedule"
         res_model="clv.verification.schedule.mass_edit"
         view_mode="form"
-        key2="client_action_multi"
         target="new"
     />
 
