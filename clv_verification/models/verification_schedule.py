@@ -36,14 +36,8 @@ class VerificationSchedule(models.Model):
 
     model = fields.Char(
         string='Model',
-        required=False,
-        help="Model name of the object on which the verification method to be called is located, e.g. 'res.partner'"
-    )
-
-    method = fields.Char(
-        string='Method',
-        required=False,
-        help="Name of the method to be called when the verification job is processed."
+        required=True,
+        help="Model name of the object on which the verification action to be called is located, e.g. 'res.partner'"
     )
 
     action = fields.Char(
@@ -52,32 +46,26 @@ class VerificationSchedule(models.Model):
         help="Name of the action used to process the verification."
     )
 
-    verification_max_task = fields.Integer(
-        string='Max Task Registers'
+    action_args = fields.Text(
+        string='Action Arguments',
+        required=False,
+        help="List  of arguments(Python dictionary format) for the action.",
+        default='{}'
     )
 
-    verification_disable_identification = fields.Boolean(
-        string='Disable Identification'
+    model_items = fields.Char(
+        string='Model Items',
+        compute='compute_model_items',
+        store=False
     )
 
-    verification_disable_check_missing = fields.Boolean(
-        string='Disable Check Missing'
-    )
+    verify_all_items = fields.Boolean(string='Verify All Items', default=True)
 
-    verification_disable_inclusion = fields.Boolean(
-        string='Disable Inclusion'
-    )
-
-    verification_disable_verification = fields.Boolean(
-        string='Disable Verification'
-    )
-
-    verification_last_update_start = fields.Datetime(
-        string="Last Update (Start)"
-    )
-
-    verification_last_update_end = fields.Datetime(
-        string="Last Update (End)"
+    verification_domain_filter = fields.Text(
+        string='Verification Domain Filter',
+        required=False,
+        help="Verification Domain Filter",
+        default='[]'
     )
 
     verification_log = fields.Text(
@@ -88,10 +76,6 @@ class VerificationSchedule(models.Model):
 
     date_last_verification = fields.Datetime(
         string='Last Verification Date',
-        readonly=True
-    )
-    upmost_last_update = fields.Datetime(
-        string="Upmost Last Update",
         readonly=True
     )
 
@@ -108,16 +92,9 @@ class VerificationSchedule(models.Model):
 
         if schedule.template_id.id is not False:
 
-            schedule.verification_max_task = schedule.template_id.verification_max_task
-            schedule.verification_disable_identification = schedule.template_id.verification_disable_identification
-            schedule.verification_disable_check_missing = schedule.template_id.verification_disable_check_missing
-            schedule.verification_disable_inclusion = schedule.template_id.verification_disable_inclusion
-            schedule.verification_disable_verification = schedule.template_id.verification_disable_verification
-            schedule.verification_last_update_start = schedule.template_id.verification_last_update_start
-            schedule.verification_last_update_end = schedule.template_id.verification_last_update_end
             schedule.model = schedule.template_id.model
-            schedule.method = schedule.template_id.method
             schedule.action = schedule.template_id.action
+            schedule.action_args = schedule.template_id.action_args
 
         return schedule
 
@@ -125,33 +102,14 @@ class VerificationSchedule(models.Model):
     def onchange_template_id(self):
         if self.template_id.id:
 
-            self.verification_max_task = self.template_id.verification_max_task
-            self.verification_disable_identification = self.template_id.verification_disable_identification
-            self.verification_disable_check_missing = self.template_id.verification_disable_check_missing
-            self.verification_disable_inclusion = self.template_id.verification_disable_inclusion
-            self.verification_disable_verification = self.template_id.verification_disable_verification
-            self.verification_last_update_start = self.template_id.verification_last_update_start
-            self.verification_last_update_end = self.template_id.verification_last_update_end
             self.model = self.template_id.model
-            self.method = self.template_id.method
             self.action = self.template_id.action
+            self.action_args = self.template_id.action_args
 
-    @api.model
-    def verification_last_update_args(self):
-
-        args = []
-        if self.verification_last_update_start is not False and \
-           self.verification_last_update_end is False:
-            args = [('write_date', '>=', self.verification_last_update_start), ]
-        if self.verification_last_update_start is False and \
-           self.verification_last_update_end is not False:
-            args += [('write_date', '<=', self.verification_last_update_end), ]
-        if self.verification_last_update_start is not False and \
-           self.verification_last_update_end is not False:
-            args += [('write_date', '>=', self.verification_last_update_start),
-                     ('write_date', '<=', self.verification_last_update_end), ]
-
-        return args
+    @api.depends('model')
+    def compute_model_items(self):
+        for r in self:
+            r.model_items = False
 
 
 class VerificationTemplate(models.Model):
@@ -168,7 +126,6 @@ class VerificationTemplate(models.Model):
         store=True
     )
 
-    # @api.multi
     @api.depends('schedule_ids')
     def _compute_count_schedules(self):
         for r in self:
