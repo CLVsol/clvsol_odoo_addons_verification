@@ -34,10 +34,11 @@ class VerificationTemplate(models.Model):
         help="Name of the action used to process the verification."
     )
 
-    action_args = fields.Char(
+    action_args = fields.Text(
         string='Action Arguments',
         required=False,
-        help="List  of arguments(Python dictionary format) for the action."
+        help="List  of arguments(Python dictionary format) for the action.",
+        default='{}'
     )
 
     active = fields.Boolean(string='Active', default=1)
