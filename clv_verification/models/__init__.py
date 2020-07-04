@@ -7,7 +7,7 @@ from . import verification_outcome_log
 from . import verification_template
 from . import verification_template_log
 from . import verification_schedule
-# from . import verification_schedule_log
+from . import verification_schedule_log
 from . import verification_batch
 from . import verification_batch_member
 # from . import verification_batch_log
