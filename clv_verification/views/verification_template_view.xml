@@ -24,19 +24,12 @@
                     </div>
                     <group name="group_top">
                         <group name="group_left">
-                            <!--field name="verification_max_task"/>
-                            <field name="verification_disable_identification"/>
-                            <field name="verification_disable_check_missing"/>
-                            <field name="verification_disable_inclusion"/>
-                            <field name="verification_disable_verification"/>
-                            <field name="verification_last_update_start"/>
-                            <field name="verification_last_update_end"/>
-                            <field name="date_inclusion"/-->
+                            <field name="date_inclusion"/>
                         </group>
                         <group name="group_right">
                             <field name="model"/>
-                            <!--field name="method"/-->
                             <field name="action"/>
+                            <field name="action_args"/>
                         </group>
                     </group>
                     <field name="notes" placeholder="Notes..." colspan="4"/>
@@ -82,17 +75,10 @@
         <field name="arch" type="xml">
             <tree name="events" string="Verification Templates">
                 <field name="name"/>
-                <!--field name="verification_max_task"/>
-                <field name="verification_disable_identification"/>
-                <field name="verification_disable_check_missing"/>
-                <field name="verification_disable_inclusion"/>
-                <field name="verification_disable_verification"/>
-                <field name="verification_last_update_start"/>
-                <field name="verification_last_update_end"/-->
                 <field name="date_inclusion"/>
                 <field name="model"/>
-                <!--field name="method"/-->
                 <field name="action"/>
+                <field name="action_args"/>
                 <field name="notes"/>
                 <field name="active" invisible="1"/>
             </tree>
@@ -106,24 +92,17 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <!--field name="verification_max_task"/>
-                <field name="verification_disable_identification"/>
-                <field name="verification_disable_check_missing"/>
-                <field name="verification_disable_inclusion"/>
-                <field name="verification_disable_verification"/>
-                <field name="verification_last_update_start"/>
-                <field name="verification_last_update_end"/-->
                 <field name="date_inclusion"/>
                 <field name="model"/>
-                <!--field name="method"/-->
                 <field name="action"/>
+                <field name="action_args"/>
                 <field name="notes"/>
                 <separator/>
                 <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
                 <group name="group_by" string="Group By...">
                     <filter name="filter_model" string="Model" context="{'group_by': 'model'}"/>
-                    <!--filter name="filter_method" string="Method" context="{'group_by': 'method'}"/-->
                     <filter name="filter_action" string="Action" context="{'group_by': 'action'}"/>
+                    <filter name="filter_action_args" string="Action Arguments" context="{'group_by': 'action_args'}"/>
                 </group>
             </search>
         </field>
@@ -133,7 +112,6 @@
         <field name="name">Verification Templates</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">clv.verification.template</field>
-        <!--*field name="view_type">form</field-->
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="clv_verification_template_view_search"/>
         <field name="domain">[]</field>
