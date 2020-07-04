@@ -14,6 +14,7 @@
     'depends': [
         'clv_base',
         'clv_global_log',
+        'clv_set'
     ],
     'data': [
         'security/verification_security.xml',
@@ -24,9 +25,9 @@
         'views/verification_template_log_view.xml',
         'views/verification_schedule_view.xml',
         # 'views/verification_schedule_log_view.xml',
-        # 'views/verification_batch_view.xml',
+        'views/verification_batch_view.xml',
         # 'views/verification_batch_log_view.xml',
-        # 'views/verification_batch_member_view.xml',
+        'views/verification_batch_member_view.xml',
         'views/verification_marker_view.xml',
         # 'views/referenceable_model_view.xml',
         # 'data/verification_batch_member.xml',
