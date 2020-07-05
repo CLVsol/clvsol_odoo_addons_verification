@@ -58,24 +58,30 @@ class VerificationScheduleExec(models.TransientModel):
             model = schedule.model
             _logger.info(u'%s %s [%s]', '>>>>>', schedule.name, model)
 
-            method_call = 'self.env["clv.verification.outcome"].' + schedule.method + '(schedule)'
-
-            _logger.info(u'%s %s', '>>>>>>>>>>', method_call)
+            method_call = False
+            action_call = False
+            if schedule.method is not False:
+                method_call = 'self.env["clv.verification.outcome"].' + schedule.method + '(schedule)'
+                _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.method, method_call)
+            elif schedule.action is not False:
+                action_call = 'self.env["clv.verification.outcome"].' + schedule.action + '(schedule)'
+                _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.action, action_call)
 
             if method_call:
 
                 schedule.verification_log = 'method: ' + str(schedule.method) + '\n\n'
-                schedule.verification_log +=  \
-                    'verification_max_task: ' + str(schedule.verification_max_task) + '\n' + \
-                    'verification_disable_identification: ' + \
-                    str(schedule.verification_disable_identification) + '\n' + \
-                    'verification_disable_check_missing: ' + \
-                    str(schedule.verification_disable_check_missing) + '\n' + \
-                    'verification_disable_inclusion: ' + str(schedule.verification_disable_inclusion) + '\n' + \
-                    'verification_disable_verification: ' + str(schedule.verification_disable_verification) + '\n' + \
-                    'verification_last_update_args: ' + str(schedule.verification_last_update_args()) + '\n\n'
+                # schedule.verification_log +=  \
+                #     'verification_last_update_args: ' + str(schedule.verification_last_update_args()) + '\n\n'
 
                 exec(method_call)
+
+            elif action_call:
+
+                schedule.verification_log = 'action: ' + str(schedule.action) + '\n\n'
+                # schedule.verification_log +=  \
+                #     'verification_last_update_args: ' + str(schedule.verification_last_update_args()) + '\n\n'
+
+                exec(action_call)
 
         return True
         # return self._reopen_form()
