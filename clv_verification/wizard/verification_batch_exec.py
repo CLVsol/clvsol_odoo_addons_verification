@@ -79,10 +79,10 @@ class VerificationBatchExec(models.TransientModel):
                     method_call = False
                     action_call = False
                     if schedule.method is not False:
-                        method_call = 'self.env["clv.verification"].' + schedule.method + '(schedule)'
+                        method_call = 'self.env["clv.verification.outcome"].' + schedule.method + '(schedule)'
                         _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.method, method_call)
                     elif schedule.action is not False:
-                        action_call = 'self.env["clv.verification"].' + schedule.action + '(schedule)'
+                        action_call = 'self.env["clv.verification.outcome"].' + schedule.action + '(schedule)'
                         _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.action, action_call)
 
                     if method_call:
