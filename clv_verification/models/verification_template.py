@@ -28,6 +28,19 @@ class VerificationTemplate(models.Model):
         help="Model name of the object on which the verification method to be called is located, e.g. 'res.partner'"
     )
 
+    method = fields.Char(
+        string='Method',
+        required=False,
+        help="Name of the method to be called when the verification job is processed."
+    )
+
+    method_args = fields.Text(
+        string='Method Arguments',
+        required=False,
+        help="List  of arguments(Python dictionary format) for the method.",
+        default='{}'
+    )
+
     action = fields.Char(
         string='Action',
         required=False,
