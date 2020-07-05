@@ -33,6 +33,8 @@
                         </group>
                         <group name="group_right">
                             <field name="model"/>
+                            <field name="method"/>
+                            <field name="method_args"/>
                             <field name="action"/>
                             <field name="action_args"/>
                         </group>
@@ -89,6 +91,8 @@
                 <field name="name"/>
                 <field name="date_inclusion"/>
                 <field name="model"/>
+                <field name="method"/>
+                <field name="method_args"/>
                 <field name="action"/>
                 <field name="action_args"/>
                 <field name="notes"/>
@@ -107,6 +111,8 @@
                 <field name="name"/>
                 <field name="date_inclusion"/>
                 <field name="model"/>
+                <field name="method"/>
+                <field name="method_args"/>
                 <field name="action"/>
                 <field name="action_args"/>
                 <field name="notes"/>
@@ -115,6 +121,8 @@
                 <group name="group_by" string="Group By...">
                     <filter name="filter_template_id" string="Verification Template" context="{'group_by': 'template_id'}"/>
                     <filter name="filter_model" string="Model" context="{'group_by': 'model'}"/>
+                    <filter name="filter_method" string="Method" context="{'group_by': 'method'}"/>
+                    <filter name="filter_method_args" string="Method Arguments" context="{'group_by': 'method_args'}"/>
                     <filter name="filter_action" string="Action" context="{'group_by': 'action'}"/>
                     <filter name="filter_action_args" string="Action Arguments" context="{'group_by': 'action_args'}"/>
                 </group>
