@@ -17,6 +17,7 @@
                         <group>
                             <field name="verification_batch_id" options="{'no_open': False, 'no_create': True}"/>
                             <field name="sequence"/>
+                            <field name="enabled"/>
                         </group>
                         <label for="notes" class="oe_edit_only"/>
                         <field name="notes" communityholder="Notes..."/>
@@ -42,6 +43,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="verification_batch_id"/>
                 <field name="notes"/>
+                <field name="enabled"/>
             </tree>
         </field>
     </record>
@@ -53,11 +55,13 @@
         <field name="arch" type="xml">
             <search>
                 <field name="verification_batch_id"/>
+                <field name="enabled"/>
                 <field name="notes"/>
                 <newline/>
                 <!--filter string="Archived" name="inactive" domain="[('active','=',False)]"/-->
                 <group name="group_by" expand="0" string="Group By...">
                     <filter name="filter_verification_batch_id" string="Verification Batch" domain="[]" context="{'group_by':'verification_batch_id'}"/>
+                    <filter name="filter_enabled" string="Enabled" domain="[]" context="{'group_by':'enabled'}"/>
                 </group>
             </search>
         </field>

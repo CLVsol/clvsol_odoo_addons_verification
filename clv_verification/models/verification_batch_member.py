@@ -23,6 +23,8 @@ class VerificationBatchMember(models.Model):
         default=10
     )
 
+    enabled = fields.Boolean(string='Enabled', default=True)
+
 
 class VerificationBatch(models.Model):
     _inherit = 'clv.verification.batch'
