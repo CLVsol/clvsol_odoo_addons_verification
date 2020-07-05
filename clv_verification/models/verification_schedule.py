@@ -36,7 +36,7 @@ class VerificationSchedule(models.Model):
 
     model = fields.Char(
         string='Model',
-        required=True,
+        required=False,
         help="Model name of the object on which the verification action to be called is located, e.g. 'res.partner'"
     )
 
