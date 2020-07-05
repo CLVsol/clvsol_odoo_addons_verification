@@ -8,4 +8,5 @@ from . import verification_template_mass_edit
 from . import verification_batch_member_mass_edit
 from . import verification_schedule_mass_edit
 from . import verification_schedule_exec
+from . import verification_batch_exec
 # from . import verification_outcome_refresh
