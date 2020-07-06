@@ -106,6 +106,8 @@ class VerificationSchedule(models.Model):
         if schedule.template_id.id is not False:
 
             schedule.model = schedule.template_id.model
+            schedule.method = schedule.template_id.method
+            schedule.method_args = schedule.template_id.method_args
             schedule.action = schedule.template_id.action
             schedule.action_args = schedule.template_id.action_args
 
@@ -116,6 +118,8 @@ class VerificationSchedule(models.Model):
         if self.template_id.id:
 
             self.model = self.template_id.model
+            self.method = self.template_id.method
+            self.method_args = self.template_id.method_args
             self.action = self.template_id.action
             self.action_args = self.template_id.action_args
 
