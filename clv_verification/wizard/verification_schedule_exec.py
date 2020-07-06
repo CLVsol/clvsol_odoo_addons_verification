@@ -30,13 +30,11 @@ class VerificationScheduleExec(models.TransientModel):
         store=False
     )
 
-    # @api.multi
     @api.depends('schedule_ids')
     def _compute_count_schedules(self):
         for r in self:
             r.count_schedules = len(r.schedule_ids)
 
-    # @api.multi
     def _reopen_form(self):
         self.ensure_one()
         action = {
@@ -49,39 +47,52 @@ class VerificationScheduleExec(models.TransientModel):
         }
         return action
 
-    # @api.multi
     def do_verification_schedule_exec(self):
         self.ensure_one()
 
+        from time import time
+        start = time()
+
         for schedule in self.schedule_ids:
 
-            model = schedule.model
-            _logger.info(u'%s %s [%s]', '>>>>>', schedule.name, model)
+            _logger.info(u'%s %s [%s]', '>>>>>', schedule.name, schedule.model)
 
-            method_call = False
-            action_call = False
-            if schedule.method is not False:
-                method_call = 'self.env["clv.verification.outcome"].' + schedule.method + '(schedule)'
-                _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.method, method_call)
-            elif schedule.action is not False:
-                action_call = 'self.env["clv.verification.outcome"].' + schedule.action + '(schedule)'
-                _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.action, action_call)
+            items = False
+            if (schedule.verify_all_items is False) and \
+               (schedule.verification_set_elements is False) and \
+               (schedule.model_items is not False):
+                items = eval('schedule.' + schedule.model_items)
+            elif (schedule.verify_all_items is False) and \
+                 (schedule.verification_set_elements is True) and \
+                 (schedule.verification_set_id is not False):
+                set_elements = schedule.verification_set_id.set_element_ids
+                items = []
+                for set_element in set_elements:
+                    items.append(set_element.ref_id)
+            elif schedule.verify_all_items is True:
+                Model = schedule.env[schedule.model]
+                items = Model.search(eval(schedule.verification_domain_filter))
 
-            if method_call:
+            _logger.info(u'%s %s %s', '>>>>>>>>>>', items, schedule.method)
 
-                schedule.verification_log = 'method: ' + str(schedule.method) + '\n\n'
-                # schedule.verification_log +=  \
-                #     'verification_last_update_args: ' + str(schedule.verification_last_update_args()) + '\n\n'
+            if len(items) > 0:
 
-                exec(method_call)
+                method_call = False
+                if schedule.method is not False:
+                    # method_call = 'self.env["clv.verification.outcome"].' + schedule.method + '(schedule)'
+                    method_call = 'items.' + schedule.method + '()'
+                    _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.method, method_call)
 
-            elif action_call:
+                if method_call:
 
-                schedule.verification_log = 'action: ' + str(schedule.action) + '\n\n'
-                # schedule.verification_log +=  \
-                #     'verification_last_update_args: ' + str(schedule.verification_last_update_args()) + '\n\n'
+                    schedule.verification_log = 'method: ' + str(schedule.method) + '\n\n'
+                    schedule.verification_log +=  \
+                        'items: ' + str(len(items)) + '\n\n'
 
-                exec(action_call)
+                    exec(method_call)
+
+            schedule.verification_log +=  \
+                '\nExecution time: ' + str(secondsToStr(time() - start)) + '\n'
 
         return True
         # return self._reopen_form()
