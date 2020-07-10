@@ -41,6 +41,7 @@
         'wizard/verification_batch_exec_view.xml',
         # # 'wizard/verification_batch_exec_view.xml',
         # 'wizard/verification_outcome_refresh_view.xml',
+        'data/global_log_client.xml',
     ],
     'demo': [],
     'test': [],
