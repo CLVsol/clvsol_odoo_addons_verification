@@ -74,13 +74,14 @@ class VerificationOutcome(models.Model):
     @api.depends('model', 'res_id')
     def _compute_reference(self):
         for record in self:
+            record.reference = False
+            record.reference_name = False
             if (record.model is not False) and (record.res_id != 0):
                 record.reference = "%s,%s" % (record.model, record.res_id)
                 Model = self.env[record.model]
                 rec = Model.search([
                     ('id', '=', record.res_id),
                 ])
-                record.reference_name = False
                 if rec.name_get() != []:
                     record.reference_name = rec.name_get()[0][1]
 
