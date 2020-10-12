@@ -30,13 +30,12 @@
     </record>
 
     <!-- More button Action -->
-    <act_window 
-        id="clv_verification_template_mass_edit_action"
-        name="Verification Template Mass Edit"
-        binding_model="clv.verification.template"
-        res_model="clv.verification.template.mass_edit"
-        view_mode="form"
-        target="new"
-    />
+    <record id="clv_verification_template_mass_edit_action" model="ir.actions.act_window">
+        <field name="name">Verification Template Mass Edit</field>
+        <field name="binding_model_id" ref="model_clv_verification_template"/>
+        <field name="res_model">clv.verification.template.mass_edit</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 
 </odoo>

@@ -36,13 +36,12 @@
     </record>
 
     <!-- More button Action -->
-    <act_window 
-        id="clv_verification_schedule_exec_action"
-        name="Verification Schedule Exec"
-        binding_model="clv.verification.schedule"
-        res_model="clv.verification.schedule.exec"
-        view_mode="form"
-        target="new"
-    />
+    <record id="clv_verification_schedule_exec_action" model="ir.actions.act_window">
+        <field name="name">Verification Schedule Exec</field>
+        <field name="binding_model_id" ref="model_clv_verification_schedule"/>
+        <field name="res_model">clv.verification.schedule.exec</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 
 </odoo>
