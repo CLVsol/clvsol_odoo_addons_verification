@@ -74,7 +74,7 @@ class VerificationOutcomeRefresh(models.TransientModel):
             if action_call:
 
                 outcome.state = 'unknown'
-                outcome.outcome_text = False
+                outcome.outcome_info = False
 
                 exec(action_call)
 
