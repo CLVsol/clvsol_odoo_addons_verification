@@ -51,81 +51,12 @@ class VerificationBatchExec(models.TransientModel):
     def do_verification_batch_exec(self):
         self.ensure_one()
 
-        from time import time
-        start_total = time()
-
-        verification_log = False
-
         for batch in self.batch_ids:
 
             _logger.info(u'%s %s', '>>>>>', batch.name)
 
-            if verification_log is False:
-                verification_log = '########## ' + batch.name + ' ##########\n'
-            else:
-                verification_log += '\n########## ' + batch.name + ' ##########\n'
-
-            for verification_batch_member in batch.verification_batch_member_ids:
-
-                if verification_batch_member.enabled:
-
-                    start = time()
-
-                    schedule = verification_batch_member.ref_id
-
-                    _logger.info(u'%s %s', '>>>>>', schedule.name)
-
-                    model = schedule.model
-                    _logger.info(u'%s %s [%s]', '>>>>>', schedule.name, model)
-
-                    items = False
-                    if (schedule.verify_all_items is False) and \
-                       (schedule.verification_set_elements is False) and \
-                       (schedule.model_items is not False):
-                        items = eval('schedule.' + schedule.model_items)
-                    elif (schedule.verify_all_items is False) and \
-                         (schedule.verification_set_elements is True) and \
-                         (schedule.verification_set_id is not False):
-                        set_elements = schedule.verification_set_id.set_element_ids
-                        items = []
-                        for set_element in set_elements:
-                            items.append(set_element.ref_id)
-                    elif schedule.verify_all_items is True:
-                        Model = schedule.env[schedule.model]
-                        items = Model.search(eval(schedule.verification_domain_filter))
-
-                    _logger.info(u'%s %s %s', '>>>>>>>>>>', items, schedule.method)
-
-                    if len(items) > 0:
-
-                        method_call = False
-                        if schedule.method is not False:
-                            method_call = 'items.' + schedule.method + '()'
-                            _logger.info(u'%s %s %s', '>>>>>>>>>>', schedule.method, method_call)
-
-                        if method_call:
-
-                            schedule.verification_log = 'method: ' + str(schedule.method) + '\n\n'
-                            schedule.verification_log +=  \
-                                'items: ' + str(len(items)) + '\n\n'
-
-                            exec(method_call)
-
-                            schedule.verification_log +=  \
-                                '\nExecution time: ' + str(secondsToStr(time() - start)) + '\n'
-
-                            verification_log += '\n########## ' + schedule.name + ' ##########\n'
-                            verification_log += schedule.verification_log
-
-                            self.env.cr.commit()
-
-            verification_log += '\n############################################################'
-            verification_log +=  \
-                '\nExecution time: ' + str(secondsToStr(time() - start_total)) + '\n'
-
-            batch.verification_log = verification_log
-
-            _logger.info(u'%s %s', '>>>>> Execution time: ', secondsToStr(time() - start_total))
+            VerificationBatch = self.env['clv.verification.batch']
+            VerificationBatch._verification_batch_exec(batch.name)
 
         return True
         # return self._reopen_form()

@@ -43,6 +43,7 @@
         # 'wizard/verification_outcome_refresh_view.xml',
         'views/verification_menu_view.xml',
         'data/global_log_client.xml',
+        'data/verification_batch_exec_cron.xml',
     ],
     'demo': [],
     'test': [],
