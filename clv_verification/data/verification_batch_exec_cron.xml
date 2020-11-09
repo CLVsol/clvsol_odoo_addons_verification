@@ -6,14 +6,15 @@
 
     <record id="clv_verification_batch_exec_cron_default_batch" model="ir.cron">
         <field name="name">Verification Batch: Execute [Default Batch]</field>
-        <field name="model_id" ref="model_clv_verification_batch" />
+        <field name="model_id" ref="model_clv_verification_batch"/>
         <field name="state">code</field>
         <field name="code">model._verification_batch_exec_cron("Default Batch")</field>
-        <field name="user_id" ref="base.user_root" />
+        <field name="user_id" ref="base.user_root"/>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
-        <field name="doall" eval="False" />
+        <field name="doall" eval="False"/>
+        <field name="active" eval="False"/>
     </record>
 
 </odoo>
