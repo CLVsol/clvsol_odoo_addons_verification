@@ -39,7 +39,7 @@
     <record id="clv_verification_outcome_reference_mass_edit_action" model="ir.actions.act_window">
         <field name="name">Verification Outcome Reference Mass Edit</field>
         <field name="binding_model_id" ref="model_clv_verification_outcome"/>
-        <field name="res_model">clv.verification.outcome</field>
+        <field name="res_model">clv.verification.outcome.reference_mass_edit</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

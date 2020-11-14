@@ -20,7 +20,7 @@ There are actually0-6 numbers for representing each job for a many2many/ one2man
 
 import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,10 +29,13 @@ class VerificationOutcomeReferenceMassEdit(models.TransientModel):
     _description = 'Verification Outcome Reference Mass Edit'
     _name = 'clv.verification.outcome.reference_mass_edit'
 
+    def _default_verification_outcome_ids(self):
+        return self._context.get('active_ids')
     verification_outcome_ids = fields.Many2many(
         comodel_name='clv.verification.outcome',
         relation='clv_verification_outcome_reference_mass_edit_rel',
-        string='Verification Outcomes'
+        string='Verification Outcomes',
+        default=_default_verification_outcome_ids
     )
 
     verification_marker_ids = fields.Many2many(
@@ -49,7 +52,6 @@ class VerificationOutcomeReferenceMassEdit(models.TransientModel):
          ], string='Verification Markers:', default=False, readonly=False, required=False
     )
 
-    # @api.multi
     def _reopen_form(self):
         self.ensure_one()
         action = {
@@ -62,16 +64,15 @@ class VerificationOutcomeReferenceMassEdit(models.TransientModel):
         }
         return action
 
-    @api.model
-    def default_get(self, field_names):
+    # @api.model
+    # def default_get(self, field_names):
 
-        defaults = super().default_get(field_names)
+    #     defaults = super().default_get(field_names)
 
-        defaults['verification_outcome_ids'] = self.env.context['active_ids']
+    #     defaults['verification_outcome_ids'] = self.env.context['active_ids']
 
-        return defaults
+    #     return defaults
 
-    # @api.multi
     def do_verification_outcome_reference_mass_edit(self):
         self.ensure_one()
 
